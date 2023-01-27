@@ -1,0 +1,137 @@
+<%- include('cabecera', {titulo:"Gestion Usuarios",iniciar:"none",cerrar:"block",iniciada:"block"}) -%>
+<div class="section">
+  <div class="container">
+    <br><br>
+    <h1 class="header center-align">Panel de control de Usuarios</h1>
+    <div class="row center-align">
+        <div class="row center-align">
+          <div class="z-depth-5 col s12 red" style='display: <%= pass_error %>'>
+            <p class="">Error: Las contraseñas deben coincidir</p>
+          </div>
+        </div>
+        
+        <div class="row center-align">
+          <div class="col s4 offset-s4">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text">
+                <span class="card-title">Usuarios Disponibles</span>
+        <% 
+        if(usuarios.length>0){
+          for(let i=0; i < usuarios.length ; i++){
+            let row=usuarios[i]
+        %>
+            <p><%= row.usuario%><br></p>
+        <%
+          }
+        }
+        %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <h2>Añadir Usuario</h2>
+        <form class="col s12" method='post' action='usuarios'>
+          <input type="hidden" name="mode" value="1">
+          <div class="row center-align">
+            <div class="input-field col s4 offset-s4">
+              <input id="usu1" name='usu1' type="text" class="validate">
+              <label for="usu1">Usuario</label>
+            </div>
+          </div>
+        <div class="row center-align">
+          <div class="input-field col s4 offset-s4">
+            <input id="pass11" name='pass11' type="password" class="validate">
+            <label for="pass11">Nueva contraseña</label>
+          </div>
+        </div>
+        <div class="row center-align">
+          <div class="input-field col s4 offset-s4">
+            <input id="pass12" name='pass12' type="password" class="validate">
+            <label for="pass12">Vuelve a introducir la contraseña</label>
+          </div>
+        </div>
+        <div class="row center-align">
+          <div class="input-field col s4 offset-s4">
+            <select class="browser-default" id="perm" name="perm">
+              <option value="1" disabled selected>Elige una opcion</option>
+              <option value="2">Usuario</option>
+              <option value="3">Administrador</option>
+            </select>
+          </div>
+        </div>
+        <div class="row center-align">
+          <div class='input-field col s4'></div>
+          <div class="input-field col s4">
+            <input type="submit" value='Añadir Usuario' class="waves-effect waves-light blue lighten-1 btn">
+          </div>
+        </div>
+      </form>
+
+      
+
+      <h2>Actualizar Usuario</h2>
+        <form class="col s12" method='post' action='usuarios'>
+          <input type="hidden" name="mode" value="2">
+          <div class="row center-align">
+            <div class="input-field col s4 offset-s4">
+              <input id="usu2" name='usu2' type="text" class="validate">
+              <label for="usu2">Usuario</label>
+            </div>
+          </div>
+        <div class="row center-align">
+          <div class="input-field col s4 offset-s4">
+            <input id="pass21" name='pass21' type="password" class="validate">
+            <label for="pass21">Nueva contraseña</label>
+          </div>
+        </div>
+        <div class="row center-align">
+          <div class="input-field col s4 offset-s4">
+            <input id="pass22" name='pass22' type="password" class="validate">
+            <label for="pass22">Vuelve a introducir la contraseña</label>
+          </div>
+        </div>
+        <div class="row center-align">
+          <div class="input-field col s4 offset-s4">
+            <select class="browser-default" id="perm2" name="perm2">
+              <option value="1" disabled selected>Elige una opcion</option>
+              <option value="2">Usuario</option>
+              <option value="3">Administrador</option>
+            </select>
+          </div>
+        </div>
+
+        </div>
+        <div class="row center-align">
+          <div class='input-field col s4'></div>
+          <div class="input-field col s4">
+            <input type="submit" value='Actualizar' class="waves-effect waves-light blue lighten-1 btn">
+          </div>
+        </div>
+      </form>
+
+
+
+      <h2>Borrar Usuario</h2>
+        <form class="col s12" method='post' action='usuarios'>
+          <input type="hidden" name="mode" value="3">
+          <div class="row center-align">
+            <div class="input-field col s4 offset-s4">
+              <input id="usu3" name='usu3' type="text" class="validate">
+              <label for="usu3">Usuario</label>
+            </div>
+          </div>
+        <div class="row center-align">
+          <div class='input-field col s4'></div>
+          <div class="input-field col s4">
+            <input type="submit" value='Borrar' class="waves-effect waves-light blue lighten-1 btn">
+          </div>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+<%- include('pie') -%>

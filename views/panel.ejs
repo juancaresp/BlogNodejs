@@ -1,0 +1,46 @@
+<%- include('cabecera', {titulo:"Panel de control",iniciar:"none",cerrar:"block",iniciada:"block"}) -%>
+<div class="section">
+  <div class="container">
+    <br><br>
+    <h1 class="header center-align">Panel de control de <%= nombre%></h1>
+    <div class="row center-align">
+      <%if(usua==3){
+        %>
+        <div class="row center-align">
+          <form class="col s6 offset-s4" action="usuarios" method="get">
+            <input type="submit" class="waves-effect waves-light blue lighten-1 btn col s3 offset-s2 z-depth-5" value="Usuarios">
+          </form>
+        </div>
+      <%
+        }
+      %>
+      <h2>Cambiar contraseña</h2>
+      <form class="col s12" method='post' action='panel'>
+        <div class="row center-align">
+          <div class="z-depth-5 col s12 red" style='display: <%= pass_error %>'>
+            <p class="">Error: Las contraseñas deben coincidir</p>
+          </div>
+        </div>
+        <div class="row center-align">
+          <div class="input-field col s4 offset-s4">
+            <input id="pass1" name='pass1' type="password" class="validate">
+            <label for="pass1">Nueva contraseña</label>
+          </div>
+        </div>
+        <div class="row center-align">
+          <div class="input-field col s4 offset-s4">
+            <input id="pass2" name='pass2' type="password" class="validate">
+            <label for="pass2">Vuelve a introducir la contraseña</label>
+          </div>
+        </div>
+        <div class="row center-align">
+          <div class='input-field col s4'></div>
+          <div class="input-field col s4">
+            <input type="submit" value='Cambiar Contraseña' class="waves-effect waves-light blue lighten-1 btn">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('pie') -%>
