@@ -1,36 +1,48 @@
 var express = require('express');
 var router = express.Router();
-const DBFactory  = require('./baseDatos').DBFactory;
-const perm = require('../permissions')
-
-//La base de datos
-let db=DBFactory("sqlite")
+const db  = require('./baseDatos').db;
+const hash = require('pbkdf2-password')()
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  if(req.session.usuario) {
-    res.render("panel",{nombre:req.session.usuario,pass_error:"none",usua:req.session.permiso});
-  }else{
-    res.redirect("/");
-  }
+  db.all("select * from entradas",(err,rows)=>{
+    if (err) {
+      console.log(err);
+    }else{
+      res.render("panel",{nombre:req.session.usuario,pass_error:"none",entradas:rows});
+    }
+  })
+  
 });
 
 router.post('/', function(req, res, next) {
+  db.all("select * from entradas",(err,rows)=>{
+    if (err) {
+      console.log(err);
+    }else{
     //Comprobar contraseñas
     const pass1 = req.body['pass1']
     const pass2 = req.body['pass2']
     if(pass1!=pass2) {
-      res.render("panel",{nombre:req.session.usuario,pass_error:"block",usua:req.session.permiso});
+      res.render("panel",{nombre:req.session.usuario,pass_error:"block",entradas:rows});
     }else{
-      db.updatePassword(req.session.usuario,pass1, req.session.permiso,(err)=>{
-        if(!err){
-          console.log('Contraseña Actualizada')
-          res.render("panel",{nombre:req.session.usuario,pass_error:"none",usua:req.session.permiso});
-        }else{
-          res.render("panel",{nombre:req.session.usuario,pass_error:"block",usua:req.session.permiso});
+      hash({password:pass1},function(err, pass, salt, hash){
+        if(err)
+          console.log("Error actualizando contraseña");
+        else{
+          db.all('Update usuarios set pass_hash=?, pass_salt=? where usuario=?',hash, salt, req.session.usuario,(err) => {
+            if(err) {
+              return console.error(err.message)
+            } else {
+              console.log('Contraseña Actualizada')
+              res.render("panel",{nombre:req.session.usuario,pass_error:"none",entradas:rows})
+            }
+          })
         }
       })
     }
+  }
+  })
 });
 
 module.exports = router

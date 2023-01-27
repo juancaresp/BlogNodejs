@@ -8,9 +8,10 @@ var logger = require('morgan');
 /*
 *Proyecto de Juan Carlos Calleja
 *
-*3=Admin
-*2=usuario normal
-*1=None
+*Siempre ha sido ejecutado desde la carpeta bin
+*Tambien es donde esta creada la base de datos y a la que trata de
+* acceder si se ejecuta desde bin el archivo www
+*
 *
 */
 
@@ -18,16 +19,18 @@ var logger = require('morgan');
 var db = require("./routes/baseDatos").db;
 
 // Se cargan las rutas
+
+var editarRouter = require('./routes/editar');
 var panelRouter = require('./routes/panel');
 var loginRouter = require('./routes/login');
-var inicioRouter = require('./routes/inicio');
+var blogRouter = require('./routes/blog');
 var logoutRouter = require('./routes/logout');
 var instaladorRouter = require('./routes/instalador');
+var enviarRouter = require('./routes/enviar');
+var borrarRouter = require('./routes/borrar');
 var usuRouter = require('./routes/usuarios');
-
 const { application } = require('express');
 const { request } = require('http');
-const perm = require("./permissions")
 
 var app = express();
 
@@ -53,38 +56,33 @@ app.use(
 const public_pages = [
     "/",
     "/login",
-    "/instalador"
+    "/instalador",
+    "/blog"
 ];
 
 // Listado de páginas que requieren algún tipo de autorización especial
-const private_pages = {
-    "/logout":[perm.USER,perm.ADMIN],
-    "/panel":[perm.USER,perm.ADMIN],
-    "/usuarios":[perm.ADMIN]
-};
+const private_pages = [
+    "/editar",
+    "/logout",
+    "/panel",
+    "/enviar",
+    "/borrar",
+    "/usuarios"
+];
 
 // Control de sesión iniciada
 app.use((req, res, next) => {
     // Se verifica que el usuario haya iniciado sesión
-    //Cortamos las peticiones get
-    let url=req.url.split("?")[0];
-
     if(req.session.usuario) {
-        if(url==="/login"){
+        if(req.url==="/login"){
             res.redirect("/")
         }
-        if(public_pages.includes(url)){
-            next()
-        }else if(url in private_pages && private_pages[url].includes(req.session.permiso)){
-            next()
-        }else{
-            next(createError(403))
-        }
+        next()
     } else {
             // Si el usuario no ha iniciado sesión, se verifica que la página es pública
-        if(public_pages.includes(url))
+        if(public_pages.includes(req.url))
             next()
-        else if(private_pages[url])
+        else if(private_pages.includes(req.url))
             res.redirect('/login')
         else
             next(createError(404)) // Not found
@@ -93,11 +91,15 @@ app.use((req, res, next) => {
 
 // Se asignan las rutas a sus funciones middleware
 
+app.use('/editar', editarRouter);
 app.use('/panel', panelRouter);
 app.use('/login', loginRouter);
-app.use('/', inicioRouter);
+app.use('/blog', blogRouter);
+app.use('/', blogRouter);
 app.use('/logout', logoutRouter);
 app.use('/instalador', instaladorRouter)
+app.use('/enviar',enviarRouter)
+app.use('/borrar',borrarRouter)
 app.use('/usuarios',usuRouter)
 
 // catch 404 and forward to error handler

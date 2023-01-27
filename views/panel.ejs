@@ -4,16 +4,16 @@
     <br><br>
     <h1 class="header center-align">Panel de control de <%= nombre%></h1>
     <div class="row center-align">
-      <%if(usua==3){
+      <%if(nombre==="admin"){
         %>
         <div class="row center-align">
           <form class="col s6 offset-s4" action="usuarios" method="get">
             <input type="submit" class="waves-effect waves-light blue lighten-1 btn col s3 offset-s2 z-depth-5" value="Usuarios">
           </form>
         </div>
-      <%
-        }
-      %>
+        <%
+          }
+        %>
       <h2>Cambiar contraseña</h2>
       <form class="col s12" method='post' action='panel'>
         <div class="row center-align">
@@ -40,6 +40,35 @@
           </div>
         </div>
       </form>
+      <h2>Blogs</h2>
+      <div class="row">
+        <form action="editar" method="post">
+          <input type="hidden" name="id" value="-1">
+          <input type="submit" class="waves-effect waves-light blue lighten-1 btn" value="Crear una nueva entrada"></input>
+        </form>
+      </div>
+        <% 
+        if(entradas.length>0){
+          for(let i=0; i < entradas.length ; i++){
+            let row=entradas[i]
+        %>
+        <div class="card-panel purple accent-1 row">
+          <div class="col s3">
+            <p><%= row.titulo %></p>
+          </div>
+          <form action="editar" method="post">
+            <input type="hidden" name="id" value="<%= row.id%>">
+            <input type="submit" class="waves-effect waves-light blue lighten-1 btn col s3 offset-s2 z-depth-5" value="Editar">
+          </form>
+          <form action="borrar" method="post">
+            <input type="hidden" name="id" value="<%= row.id%>">
+            <input type="submit" class="waves-effect waves-light blue lighten-1 btn col s3 offset-s1 z-depth-5" value="Eliminar">
+          </form>
+        </div>
+        <%
+          }
+        }
+        %>
     </div>
   </div>
 </div>

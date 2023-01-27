@@ -1,15 +1,73 @@
-<%- include('cabecera', {titulo: 'Plantilla - Juan Carlos Calleja'}) -%>
+<%- include('cabecera', {titulo: 'Blog - Juan Carlos Calleja'}) -%>
 <div class="section">
   <div class="container">
     <br><br>
-    <h1 class="header center-align">Plantilla de Juan Carlos Calleja</h1>
+    <h1 class="header center-align">Blog de Juan Carlos Calleja</h1>
     <div class="row center-align">
       <h5 class="header col s12">
-        Pagina PlantillaWeb
+        Ultimas Entradas
       </h5>
     </div>
   </div>
 </div>
+
+<div class="container">
+  <div class="section">
+    <% 
+        if(entradas.length>0){
+          for(let i=0; i < entradas.length ; i++){
+            let row=entradas[i]
+        %>
+        <div class="card-panel purple accent-1 row">
+          <div class="col s12 row">
+            <h2><spam class="blue-text text-darken-4"><%= row.titulo%></spam></h2>
+            <p><spam class="blue-text text-darken-1"><%= new Date(row.fecha).toLocaleDateString()%></spam></p>
+          </div>
+          <div class="card-panel col s12 row z-depth-5 teal lighten-4">
+            <pre class="col s8"><%= row.texto%></pre>
+          </div>
+          <div class="row" style="display: <%= perm%>">
+            <form action="editar" method="post">
+              <input type="hidden" name="id" value="<%= row.id%>">
+              <input type="submit" class="waves-effect waves-light blue lighten-1 btn col s3 z-depth-5" style="display: <%= perm%>" value="Editar">
+            </form>
+            <form action="borrar" method="post">
+              <input type="hidden" name="id" value="<%= row.id%>">
+              <input type="submit" class="waves-effect waves-light blue lighten-1 btn col s3 offset-s1 z-depth-5" style="display: <%= perm%>" value="Eliminar">
+            </form>
+          </div>
+        </div>
+        <%
+          }
+        }
+        %>
+  </div>
+
+  <ul class="pagination">
+    <% for(let i=0;i<n;i++){
+      if(np!=i){
+    %>
+    <li class="waves-effect">
+      <form method="post" action="blog">
+        <input type="hidden" name="p" value="<%= i%>">
+        <input type="submit" value="<%= i%>">
+      </form>
+    </li>
+    <%
+    }else{
+      %>
+      <li class="active">
+        <form method="post" action="blog">
+          <input type="hidden" name="p" value="<%= i%>">
+          <input type="submit" value="<%= i%>">
+        </form>
+      </li>
+      <%
+    }
+  }
+    %>
+  </ul>
+
   <br><br>
 </div>
 <%- include('pie') -%>

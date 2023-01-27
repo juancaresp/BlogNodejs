@@ -6,20 +6,19 @@
 <!-- Se inserta la hoja de estilo -->
 <link rel="stylesheet" href="/stylesheets/material-design-icons.css">
 <link rel="stylesheet" href="/stylesheets/materialize.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="/javascripts/materialize.js"></script>
 </head>
 <body>
 <!-- Se inserta la cabecera de navegación -->
 <nav>
   <div class="nav-wrapper">
-    <a href="/" class="brand-logo">Plantilla de Jc</a>
+    <a href="/" class="brand-logo">Blog Jc</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li style="display: <%= iniciada%>">Sesion iniciada como <%= nombre%></li>
-      <li><a href="/">Inicio</a></li>
-      <li style="display: <%= iniciar%>"><a href="/login">Iniciar Sesion</a></li>
-      <li><a href="/logout" style="display: <%= cerrar%>"><i class="material-icons">power_settings_new</i></a></li>
-      <li><a href="/panel"><i class="material-icons">account_box</i></a></li>
+      <li><a href="/">Blog</a></li>
+      <li style="display: <%= iniciar%>"><a href="/login">Inciar Sesion</a></li>
+      <li><a href="/logout" style="display: <%= cerrar%>">Cerrar Sesion</a></li>
+      <li><a href="/panel">Perfil</a></li>
     </ul>
   </div>
 </nav>

@@ -1,12 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const DBFactory=require("./baseDatos.js").DBFactory;
-
-//La base de datos
-let db=DBFactory("sqlite")
+const db=require("./baseDatos.js");
 
 router.get('/', function(req, res, next) {
-  db.iniciar();
+  db.iniciardb();
   res.render('instalador',{iniciar:"block",cerrar:"none",iniciada:"none",nombre:""});
 });
 

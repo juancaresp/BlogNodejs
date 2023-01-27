@@ -1,0 +1,38 @@
+<%- include('cabecera', {titulo:title, iniciar: "none", cerrar: "block", iniciada: "block"}) -%>
+<div class="section">
+  <div class="container">
+    <br><br>
+    <form action="enviar" method="post">
+
+      <div class="row center-align">
+        <h1 class="header center-align">Entrada</h1>
+      </div>
+
+      <input type="hidden" name="id" value="<%= id%>">
+      
+      <div class="row center-align">
+        <div class="input-field col s4">
+          <input id="titulo" name='titulo' type="text" class="validate" value="<%= titulo%>">
+          <label for="titulo">Titulo</label>
+        </div>
+      </div>
+
+      <div class="row center-align">
+        <div class="input-field col s8">
+          <textarea id="textarea1" class="materialize-textarea white" name="texto" style="width: 800px; height: 300px;"><%= texto%></textarea>
+          <label for="textarea1">Descripcion</label>
+        </div>
+      </div>
+
+      <div class="row center-align">
+        <div class="input-field col s2">
+          <input name="fecha" type="date" value="<%= fecha%>">
+        </div>
+      </div>
+
+      <input type="submit" class="waves-effect waves-light blue lighten-1 btn" value="Guardar"></input>
+
+    </form>
+  </div>
+</div>
+<%- include('pie') -%>
