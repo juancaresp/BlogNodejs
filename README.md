@@ -1,19 +1,19 @@
 # BlogNodejs
- Practica de realizar una web con nodejs en la que hay autentificacion y posts
+ Its a practice about made a web in nodejs whit autentication and posts like in a blog
 
-# Pasos para que funcione
--Clonar el repsotorio en una carpeta
+# Steps to Start the server
+-Clone the repository in your directory
 
--Ir con un terminal hasta la carpeta y ejecutar el siguiente comando:
+-Whit the Terminal go to the directory and run this command:
 
 ```bash
 npm install
 ```
 
--Ejecutar en la carpeta bin el comando:
+-In the directory /bin run the command:
 
 ```bash
 node www
 ```
 
--Por ultimo abrir el navegador y acceder a la web localhost:3000
+-And the final step is open your browsera and go to localhost:3000
